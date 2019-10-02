@@ -1,0 +1,72 @@
+﻿@model mvctest.Models.View.AttendanceIndexVM
+@{
+    //Layout = "_Layout2";
+}
+
+@section Styles {  
+    <style>
+        table {
+            background-color: yellow;
+            color: black;
+            border: 1px solid black;
+            border-spacing: 0;
+            border-collapse: collapse;
+            clear: both;
+        }
+        td, th {
+            border: 1px solid black;
+        }
+        .stulist {
+                
+        }
+        .stuavatar {
+            width: 100px;
+            float: left;
+        }
+        .stuline {
+            margin-left: 120px;
+        }
+        .stuitem {
+            overflow: auto;
+            border: 2px dotted #333;
+            box-shadow: #333 10px 10px 10px;
+            margin: 15px 20px;
+            width: 30vw;
+            float: left;
+        }
+        .stuline .key {
+            display: inline-block;
+            width: 125px;
+            font-weight: bold;
+        }
+        .stuline .key::after {
+            content: ":"
+        }
+    </style>
+}
+<h1>Attendance</h1>
+<h2>Student List</h2>
+
+<div class="stulist">
+
+    @foreach(var student in Model.Students) {
+        <partial name="_StudentPV" />
+    }
+
+</div>
+
+    <table>
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Days Attended</th>
+        </tr>
+        @foreach (var stud in Model.Students)
+        {
+            <tr>
+                <td>@stud.LastName</td>
+                <td>@stud.FirstName</td>
+                <td>@stud.DaysAttended</td>
+            </tr>
+        }
+    </table>

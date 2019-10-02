@@ -1,0 +1,44 @@
+﻿@page
+<h1>This is a razor page</h1>
+<p>The current time is @DateTime.Now</p>
+
+@{
+    var name = "Paul";
+}
+
+<p>Your name is @name</p>
+
+
+@if (name == "Joe") {
+    var x = 1;
+    x = x+1;
+    <p>x = @x</p>
+} else {
+    var x = 2;
+    x+=2;
+    <p>x = @x (alt)</p>
+}
+
+@{
+    var results = new List<String>();
+    // NORMALLY here you might query a database to get stuff (results)
+    results.Add("Thing 1");
+    results.Add("Thing 2");
+}
+
+@if (results.Count() > 0) {
+    <h2>@results.Count() items:</h2>
+    <ul>
+    @foreach (var item in results)
+    {
+        <li>@item</li>
+    }
+    </ul>
+} else {
+    <h2>No Stuff Here</h2>
+}
+
+@{/*
+ <% CODE HERE %>  ==> @{ CODE HERE }
+<%= VARIABLE %>  ==> @VARIABLE -->
+*/}

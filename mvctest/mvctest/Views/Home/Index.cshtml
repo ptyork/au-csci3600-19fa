@@ -1,0 +1,25 @@
+﻿<div class="text-center">
+    <h1 class="display-4">Hi Ho</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@section Styles {
+
+}
+
+@{ 
+    string firstName = "Bobafett";
+}
+
+<form method="post">
+    <label>First Name:</label>
+    <input type="text" name="FirstName" value="@firstName" />
+    <br />
+    <label>Last Name:</label>
+    <input type="text" name="LastName" />
+    <br />
+    <label>Can boogie:</label>
+    <input type="checkbox" name="CanBoogie" />
+    <br />
+    <input type="submit" value="GO" />
+</form>

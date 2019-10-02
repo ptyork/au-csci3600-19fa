@@ -1,0 +1,17 @@
+﻿@model mvctest.Models.Data.Student
+
+<div class="stuitem">
+    <img class="stuavatar" src="~/images/@Model.ImageName" />
+    <div class="stuline">
+        <span class="key">First Name</span>
+        <span class="val">@Model.FirstName</span>
+    </div>
+    <div class="stuline">
+        <span class="key">Last Name</span>
+        <span class="val">@Model.LastName</span>
+    </div>
+    <div class="stuline">
+        <span class="key">Days Attended</span>
+        <span class="val">@Model.DaysAttended</span>
+    </div>
+</div>
