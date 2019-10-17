@@ -4,14 +4,21 @@
 </div>
 
 @section Styles {
-
+    <style>
+        #feedback {
+            border: 1px solid black;
+            background-color: yellow;
+            display: none;
+        }
+    </style>
 }
 
 @{ 
     string firstName = "Bobafett";
 }
 
-<form method="post">
+<div id="feedback"></div>
+<form method="post" onsubmit="return submitHandler()">
     <label>First Name:</label>
     <input type="text" name="FirstName" value="@firstName" />
     <br />
@@ -23,3 +30,30 @@
     <br />
     <input type="submit" value="GO" />
 </form>
+
+@section Scripts {
+<script>
+    function submitHandler() {
+        //var vals = '';
+        //for (var i = 0; i < document.forms[0].elements.length; i++) {
+        //    vals += document.forms[0].elements[i].value + "\n";
+        //}
+        fname = document.forms[0].elements['FirstName'].value;
+        lname = document.forms[0].elements['LastName'].value;
+        isValid = true;
+        feedbackDiv = document.getElementById("feedback");
+        feedbackDiv.innerHTML = '';
+        if (fname.trim().length == 0) {
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.innerHTML += '<p>First Name is Required!</p>';
+            isValid = false;
+        }
+        if (lname.trim().length == 0) {
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.innerHTML += '<p>Last Name is Required!</p>';
+            isValid = false;
+        }
+        return isValid;
+    }
+</script>
+}
