@@ -12,6 +12,10 @@
             top: -1px;
             display: none;
         }
+
+        .bold {
+            font-weight: bold;
+        }
     </style>
 }
 
@@ -50,12 +54,28 @@
 
         lis = document.querySelectorAll('.thelist > li');
         lis.forEach((elem) => {
-            alert(elem.innerText);
+            //alert(elem.innerText);
+        });
+
+        tick = document.getElementById('ticker');
+        tick.addEventListener('click', function () {
+            var h1 = document.querySelector('h1');
+            h1.style.opacity = "1";
+            var int = setInterval(function () {
+                var opacity = parseFloat(h1.style.opacity);
+                if (opacity > 0) {
+                    h1.style.opacity = opacity - 0.05;
+                } else {
+                    clearInterval(int);
+                }
+            }, 100);
         });
     });
 
 </script>
 
+<button id="ticker">TICKLE ME</button>
+<button id="ticker2">TICKLE ME ELMO</button>
 <div id="feedback"></div>
 <ul class="thelist">
     <li>Item 1</li>
@@ -66,10 +86,11 @@
 </ul>
 <div>
     <button id="thebutton">I'm a COOL Button</button>
+    <button id="cooler">EVEN COOLER</button>
 </div>
 
 
-<form method="post" onsubmit="return submitHandler()">
+<form method="post" onsubmit="return submitHandler()" id="coolform">
     <label>First Name:</label>
     <input type="text" name="FirstName" value="@firstName" />
     <br />
@@ -85,6 +106,22 @@
 @section Scripts {
     <script>
 
+        //var $ = jQuery;
+        //$(document).ready(function () {})
+        $(function () {
+            $('.thelist li').click(function () {
+                $(this).toggleClass('bold');
+            })
+            $('.thelist li').each(function () {
+                // alert(this.innerText);
+            })
+            $('#cooler').click(function () {
+                $('#coolform').slideToggle();
+            })
+            $('#ticker2').click(function () {
+                $('h1').fadeToggle();
+            })
+        })
 
 
         function submitHandler() {
