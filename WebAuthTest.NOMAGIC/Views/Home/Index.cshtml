@@ -1,0 +1,54 @@
+﻿@model HomeIndexVM
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+  <h1 class="display-4">Welcome</h1>
+  <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<h2>Comments</h2>
+
+@foreach (var post in Model.Comments)
+{
+  <h3>@post.Topic</h3>
+  <p>@post.Text</p>
+
+  <ul>
+    @foreach (var reply in post.Replies)
+    {
+      <li>@reply.Text</li>
+    }
+  </ul>
+
+  <form method="post" action="~/Home/NewComment">
+    <input name="ParentPostId" type="hidden" value="@post.PostId" />
+    <input name="Topic" type="hidden" value="@post.Topic" />
+    <input name="Text" placeholder="Reply to this Comment..." />
+    <input type="submit" value="Submit Reply" />
+  </form>
+}
+
+@{ 
+    bool didfail = false;
+    if (TempData["didfail"] != null && (bool)TempData["didfail"])
+    {
+        didfail = true;
+    }
+}
+@if (didfail)
+{
+<div class="text-danger bg-danger">IT FAILED</div>
+}
+
+<form method="post" action="~/Home/NewComment">
+  <label >Topic</label>
+  <input name="Topic" />
+  <br />
+  <label>Text</label>
+  <input name="Text" />
+  <br />
+  <input type="submit" />
+</form>

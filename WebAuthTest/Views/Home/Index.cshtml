@@ -1,8 +1,54 @@
-﻿@{
+﻿@using WebAuthTest.Models.Data
+@model HomeIndexVM
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+  <h1 class="display-4">Welcome</h1>
+  <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<h2>Comments</h2>
+
+@foreach (var post in Model.Comments)
+{
+  <h3>@post.Topic</h3>
+  <p>@post.Text</p>
+
+  <ul>
+    @foreach (var reply in post.Replies)
+    {
+      <li>@reply.Text</li>
+    }
+  </ul>
+
+  <form method="post">
+    <input asp-for="Post.ParentPostId" type="hidden" value="@post.PostId" />
+    <input asp-for="Post.Topic" type="hidden" value="@post.Topic" />
+    <input asp-for="Post.Text" placeholder="Reply to this Comment..." />
+    <span asp-validation-for="Post.Text" class="text-danger"></span>
+    <input type="submit" value="Submit Reply" />
+  </form>
+}
+
+@*ADDED: to show validation errors*@
+<div asp-validation-summary="All" class="text-danger"></div>
+
+@* ADDED: asp-for attributes for form elements *@
+<form method="post">
+  <label asp-for="Post.Topic"></label>
+  <input asp-for="Post.Topic" />
+  <span asp-validation-for="Post.Topic" class="text-danger"></span>
+  <br />
+  <label asp-for="Post.Text"></label>
+  <input asp-for="Post.Text" />
+  <span asp-validation-for="Post.Text" class="text-danger"></span>
+  <br />
+  <input type="submit" />
+</form>
+
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+}

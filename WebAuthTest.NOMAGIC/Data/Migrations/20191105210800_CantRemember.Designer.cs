@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAuthTest.Data;
 
 namespace WebAuthTest.Data.Migrations
 {
     [DbContext(typeof(BubbaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191105210800_CantRemember")]
+    partial class CantRemember
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,29 +209,6 @@ namespace WebAuthTest.Data.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("WebAuthTest.Models.Data.Post", b =>
-                {
-                    b.Property<int>("PostId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ParentPostId");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("Topic")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.HasKey("PostId");
-
-                    b.HasIndex("ParentPostId");
-
-                    b.ToTable("Posts");
-                });
-
             modelBuilder.Entity("WebAuthTest.Models.Data.Section", b =>
                 {
                     b.Property<int>("SectionId")
@@ -299,13 +278,6 @@ namespace WebAuthTest.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebAuthTest.Models.Data.Post", b =>
-                {
-                    b.HasOne("WebAuthTest.Models.Data.Post", "ParentPost")
-                        .WithMany("Replies")
-                        .HasForeignKey("ParentPostId");
                 });
 
             modelBuilder.Entity("WebAuthTest.Models.Data.Section", b =>

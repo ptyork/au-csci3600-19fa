@@ -32,23 +32,45 @@ namespace WebAuthTest.Controllers
             return View(model);
         }
 
-        // ADDED: Bind and Prefix to bind form fields to a model object
         [HttpPost]
-        public IActionResult Index([Bind("Topic,Text,ParentPostId", Prefix="Post")] Post newpost)
+        public IActionResult NewComment()
         {
-            ModelState.AddModelError("badness", "bad crap a happenin'");
-            if (ModelState.IsValid)
+            var topicList = Request.Form["Topic"];
+            var textList = Request.Form["Text"];
+            var parentList = Request.Form["ParentPostId"];
+
+            bool isValid = true;
+
+            if (topicList.Count != 1) isValid = false;
+            var topic = "";
+            if (isValid && topicList[0].Length >= 5 && topicList[0].Length <= 100)
             {
-                _ctx.Add(newpost);
-                _ctx.SaveChanges();
+                topic = topicList[0];
+            }
+            else
+            {
+                isValid = false;
+            }
+
+            if (isValid && textList.Count != 1) isValid = false;
+            var text = "";
+            if (isValid && textList[0].Length >= 2 && textList[0].Length <= 1000)
+            {
+                text = textList[0];
+            }
+            else
+            {
+                isValid = false;
+            }
+
+            if (isValid)
+            {
+                //_ctx.Add(newpost);
+                //_ctx.SaveChanges();
                 return RedirectToAction("Index");
             }
-            var model = new HomeIndexVM();
-            model.Comments = _ctx.Posts
-                .Include(p => p.Replies)
-                .Where(p => p.ParentPost == null)
-                .ToList();
-            return View(model);
+            TempData["didfail"] = true;
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

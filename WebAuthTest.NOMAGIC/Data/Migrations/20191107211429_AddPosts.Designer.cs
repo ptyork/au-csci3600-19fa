@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAuthTest.Data;
 
 namespace WebAuthTest.Data.Migrations
 {
     [DbContext(typeof(BubbaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191107211429_AddPosts")]
+    partial class AddPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,13 +217,9 @@ namespace WebAuthTest.Data.Migrations
 
                     b.Property<int?>("ParentPostId");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(1000);
+                    b.Property<string>("Text");
 
-                    b.Property<string>("Topic")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                    b.Property<string>("Topic");
 
                     b.HasKey("PostId");
 
