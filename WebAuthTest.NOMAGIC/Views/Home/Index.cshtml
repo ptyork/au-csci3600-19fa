@@ -1,4 +1,5 @@
 ﻿@model HomeIndexVM
+@using Microsoft.AspNetCore.Http
 
 @{
     ViewData["Title"] = "Home Page";
@@ -9,6 +10,7 @@
   <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+<h3>Last Message: @Context.Session.GetString("LastMessage")</h3>
 <h2>Comments</h2>
 
 @foreach (var post in Model.Comments)
@@ -23,10 +25,11 @@
     }
   </ul>
 
-  <form method="post" action="~/Home/NewComment">
+  <form class="replyform" method="post" action="~/Home/NewComment">
     <input name="ParentPostId" type="hidden" value="@post.PostId" />
     <input name="Topic" type="hidden" value="@post.Topic" />
-    <input name="Text" placeholder="Reply to this Comment..." />
+    <input class="replytext" name="Text" placeholder="Reply to this Comment..." />
+    <span class="replytext_err"></span>
     <input type="submit" value="Submit Reply" />
   </form>
 }
@@ -52,3 +55,23 @@
   <br />
   <input type="submit" />
 </form>
+
+@section Scripts {
+<script>
+    $('.replyform').submit(function () {
+        text = $(this).find('.replytext').val();
+        if (text.length < 2 || text.length > 1000) {
+            $(this).find('.replytext_err').html('Must be between 2 and 1000 characters');
+            return false;
+        }
+        return true;
+    });
+    $('.replytext').blur(function () {
+        text = $(this).val();
+        if (text.length >= 2 && text.length <= 1000) {
+            $(this).next().html('');
+        }
+    });
+
+</script>
+}
