@@ -76,6 +76,11 @@ namespace WebAuthTest.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult JSONTest()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
